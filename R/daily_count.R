@@ -7,7 +7,6 @@
 #' @examples
 daily_count <- function() {
   baseline <- get_inputfile(.file="daily_count_baseline")
-  baseline %>% readr::write_csv("inputfiles/daily_count_baseline.csv.bak")
 
   today_total <- totals_by_type() %>%
     dplyr::mutate(date_recorded = as.Date(today()))
@@ -64,7 +63,6 @@ graph_counts <- function(indsn, type_id, count_type) {
       subtitle = glue::glue("Equipement Type: {type_id}"),
       caption = "Data From: https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html"
     ) +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust =
-                                                         1))
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
   return(g)
 }

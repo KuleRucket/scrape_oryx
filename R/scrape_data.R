@@ -72,8 +72,6 @@ create_data <- function() {
       dplyr::bind_rows(previous, .id = NULL) %>%
       dplyr::arrange(country, system, date_recorded)
 
-    previous %>% readr::write_csv("inputfiles/totals_by_system.csv.bak")
-
     data %>% readr::write_csv(glue::glue("inputfiles/totals_by_system{lubridate::today()+1}.csv"))
   } else {
     data <- previous
