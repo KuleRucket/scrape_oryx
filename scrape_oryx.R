@@ -31,10 +31,10 @@ library(logr)
 library(ggplot2)
 library(scales)
 library(ggthemes)
+
 source("R/functions.R")
 source("R/scrape_data.R")
 source("R/totals_by_type.R")
-source("R/per_event.R")
 source("R/daily_count.R")
 
 message("starting")
@@ -47,12 +47,9 @@ ukraine_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenti
 #lf <- logr::log_open(tmp)
 today <- format(Sys.Date(), "%Y-%m-%d")
 
-message("updating totals_by_system.csv")
+message("updating totals_by_system.csv (this takes ages)")
 totals_by_system <- create_data() %>%
   readr::write_csv(., file = glue::glue("outputfiles/totals_by_system.csv"))
-
-message("creating event tables")
-create_event_tables(totals_by_system, status)
 
 message("updating totals_by_system_wide.csv")
 totals_by_system_wide <- total_by_system_wide(totals_by_system) %>%
