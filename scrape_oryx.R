@@ -67,6 +67,8 @@ message("updating daily_count.csv")
 daily_count <- daily_count() %>%
   readr::write_csv(., file = "outputfiles/daily_count.csv")
 
+message("quarto_render")
+
 #rmarkdown::render("index.Rmd")
 quarto::quarto_render("index.qmd")
 
