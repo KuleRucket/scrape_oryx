@@ -24,7 +24,6 @@ format:
 source("R/functions.R")
 source("R/scrape_data.R")
 source("R/totals_by_type.R")
-source("R/per_event.R")
 source("R/daily_count.R")
 ```
 
