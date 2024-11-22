@@ -27,7 +27,6 @@ library(tibble)
 library(stringr)
 library(readr)
 library(glue)
-library(logr)
 library(ggplot2)
 library(scales)
 library(ggthemes)
@@ -42,9 +41,6 @@ message("starting")
 russia_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html"
 ukraine_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-ukrainian.html"
 
-# tmp <-
-#   file.path("outputfiles", sprintf("scrape_oryx_%s.log", format(Sys.time(), "%Y%m%dT%H%M%S")))
-#lf <- logr::log_open(tmp)
 today <- format(Sys.Date(), "%Y-%m-%d")
 
 message("updating totals_by_system.csv (this takes ages)")
@@ -68,10 +64,5 @@ message("quarto_render")
 
 #rmarkdown::render("index.Rmd")
 quarto::quarto_render("index.qmd")
-
-# logr::log_code()
-# logr::log_close()
-#
-# writeLines(readLines(lf))
 
 message("done")
