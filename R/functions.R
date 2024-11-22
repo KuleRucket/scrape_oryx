@@ -17,9 +17,6 @@ get_inputfile <- function(.file) {
     dplyr::pull(path)
 
   message(path)
-
-  # logr::put(path)
-
   readr::read_csv(path)
 }
 
