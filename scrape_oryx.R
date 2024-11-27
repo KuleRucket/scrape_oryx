@@ -14,7 +14,7 @@ if (Sys.info()["sysname"] == "Linux") {
 }
 
 library(renv)
-#renv::restore(prompt = FALSE)
+renv::restore(prompt = FALSE)
 library(rvest)
 library(dplyr)
 library(tidyr)
