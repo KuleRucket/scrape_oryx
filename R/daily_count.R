@@ -38,31 +38,3 @@ daily_count <- function() {
     return(baseline)
   }
 }
-
-graph_counts <- function(indsn, type_id, count_type) {
-  data <- indsn %>%
-    dplyr::filter(equipment_type == type_id) %>%
-    dplyr::rename(count = count_type) %>%
-    dplyr::select(country, equipment_type, count, date_recorded) %>%
-    dplyr::arrange(date_recorded)
-
-  g <-
-    ggplot2::ggplot(data, ggplot2::aes(date_recorded, count, colour = country)) + ggplot2::geom_line() +
-    ggplot2::scale_x_date(
-      "Date",
-      date_breaks = "3 days",
-      date_minor_breaks = "1 day",
-      date_labels = "%d %b %Y"
-    ) + ggplot2::scale_y_continuous("Equipment Losses", breaks = scales::pretty_breaks()) +
-    ggthemes::geom_rangeframe() + ggthemes::theme_few() + ggplot2::guides(color =
-                                                                            ggplot2::guide_legend(title = "Country")) +
-    ggplot2::labs(
-      title = glue::glue(
-        "Total Equipment Losses Through {format(lubridate::today(), '%B %d, %Y')}"
-      ),
-      subtitle = glue::glue("Equipement Type: {type_id}"),
-      caption = "Data From: https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html"
-    ) +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
-  return(g)
-}

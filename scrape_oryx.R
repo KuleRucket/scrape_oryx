@@ -25,7 +25,6 @@ library(tibble)
 library(stringr)
 library(readr)
 library(glue)
-library(ggplot2)
 library(scales)
 library(ggthemes)
 library(logger)
@@ -57,10 +56,5 @@ total_by_type <- totals_by_type() %>%
 log_info("updating daily_count.csv")
 daily_count <- daily_count() %>%
   readr::write_csv(., file = "outputfiles/daily_count.csv")
-
-log_info("quarto_render")
-
-#rmarkdown::render("index.Rmd")
-quarto::quarto_render("index.qmd")
 
 log_info("done")
