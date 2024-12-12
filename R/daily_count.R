@@ -20,7 +20,7 @@ daily_count <- function() {
       dplyr::bind_rows(check) %>%
       dplyr::group_by(country, equipment_type) %>%
       dplyr::arrange(country, equipment_type, date_recorded) %>%
-      readr::write_csv(glue::glue("inputfiles/daily_count_baseline{lubridate::today()+1}.csv"))
+      readr::write_csv(glue::glue("inputfiles/daily_count_baseline.csv"))
 
     running_count <- baseline %>%
       dplyr::bind_rows(check) %>%
