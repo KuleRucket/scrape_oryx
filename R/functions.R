@@ -2,24 +2,6 @@ get_data <- function(url, elements) {
   rvest::read_html(url) %>% rvest::html_elements(elements)
 }
 
-get_inputfile <- function(.file) {
-  #path <-
-  #  fs::dir_info("inputfiles", type = "file", regexp = ".file") %>%
-  #  dplyr::select(path) %>%
-  #  dplyr::filter(stringr::str_detect(path, .file)) %>%
-  #  dplyr::mutate(
-  #    date_created = stringr::str_remove_all(fs::path_file(path), "[a-zA-Z_.]+"),
-  #    date_created = as.Date(date_created)
-  #  ) %>%
-  #  tidyr::drop_na(date_created) %>%
-  #  dplyr::filter(date_created == max(date_created)) %>%
-  #  dplyr::pull(path)
- 
-  path <- stringr::str_c("inputfiles/", .file, ".csv")
-  message(path)
-  readr::read_csv(path)
-}
-
 extract_total <- function(indsn, x) {
   total <- indsn[[x]] %>%
     rvest::html_text2() %>%
