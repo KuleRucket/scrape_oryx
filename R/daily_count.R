@@ -25,8 +25,7 @@ daily_count <- function() {
       dplyr::bind_rows(check) %>%
       dplyr::group_by(country, equipment_type) %>%
       dplyr::arrange(country, equipment_type, date_recorded) %>%
-      dplyr::mutate(dplyr::across(where(is.numeric), ~ .x - dplyr::lag(.x), .names =
-                                    "{.col}_diff")) %>%
+      dplyr::mutate(dplyr::across(where(is.numeric), ~ .x - dplyr::lag(.x), .names = "{.col}_diff")) %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ tidyr::replace_na(.x, 0))) %>%
       dplyr::distinct(country, equipment_type, date_recorded, .keep_all=TRUE)
 
