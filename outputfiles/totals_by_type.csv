@@ -20,7 +20,10 @@ Russia,Anti-Aircraft Guns,39,0,18,1,58
 Russia,Self-Propelled Anti-Aircraft Guns,16,2,7,2,27
 Russia,Surface-To-Air Missile Systems,221,4,24,51,300
 Russia,Radars,58,0,10,24,92
+Russia,Surface-To-Air Missile Systems,221,4,24,51,300
+Russia,Radars,58,0,10,24,92
 Russia,Jammers And Deception Systems,66,0,9,12,87
+Russia,Aircraft,120,0,0,16,136
 Russia,Aircraft,120,0,0,16,136
 Russia,Helicopters,119,0,2,30,151
 Russia,Unmanned Combat Aerial Vehicles,14,0,3,1,18
@@ -55,4 +58,5 @@ Ukraine,Helicopters,46,0,3,3,52
 Ukraine,Unmanned Combat Aerial Vehicles,28,0,1,0,29
 Ukraine,Reconnaissance Unmanned Aerial Vehicles,302,0,163,1,466
 Ukraine,Naval Ships,14,0,19,8,41
+Ukraine,"Trucks, Vehicles, and Jeeps",833,16,192,31,1072
 Ukraine,"Trucks, Vehicles, and Jeeps",833,16,192,31,1072
