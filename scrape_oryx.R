@@ -6,6 +6,10 @@
 #'
 #'
 #' @author Daniel Scarnecchia
+#' 
+#' When is breaks, try these:file
+#' rm -rf ./outputfiles/log/ ./renv/library/
+#' rm -rf ~/.cache/R
 
 # Setup
 if (Sys.info()["sysname"] == "Linux") {
