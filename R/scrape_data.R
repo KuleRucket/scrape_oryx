@@ -5,18 +5,13 @@
 #' @export
 scrape_data <- function(country) {
   if (country == "Russia") {
-    url <-
-      russia_url
+    url <- russia_url
   } else {
-    url <-
-      ukraine_url
+    url <- ukraine_url
   }
 
   materiel <-
-    get_data(
-      url,
-      "article"
-    ) %>%
+    get_data(url, "article") |>
     rvest::html_elements("li")
 
   data <-
@@ -30,7 +25,7 @@ scrape_data <- function(country) {
 
   counter <- 0
   for (a in seq_along(materiel)) {
-    status <- materiel[[a]] %>% rvest::html_elements("a")
+    status <- materiel[[a]] |> rvest::html_elements("a")
     for (b in seq_along(status)) {
       counter <- counter + 1
       data[counter, 1] <- country
@@ -41,10 +36,10 @@ scrape_data <- function(country) {
     }
   }
 
-  data <- data %>%
-    dplyr::mutate(status = stringr::str_extract_all(status, "destroyed|captured|abandoned|damaged")) %>%
-    tidyr::unnest_longer(status) %>%
-    dplyr::mutate(date_recorded = as.Date(lubridate::today())) %>%
+  data <- data |>
+    dplyr::mutate(status = stringr::str_extract_all(status, "destroyed|captured|abandoned|damaged")) |>
+    tidyr::unnest_longer(status) |>
+    dplyr::mutate(date_recorded = as.Date(lubridate::today())) |>
     trim_all()
 }
 
@@ -52,47 +47,45 @@ create_data <- function() {
   russia <- scrape_data("Russia")
   ukraine <- scrape_data("Ukraine")
 
-  data <- russia %>%
-    dplyr::bind_rows(ukraine) %>%
-    dplyr::select(country, origin, system, status, url, date_recorded) %>%
+  data <- russia |>
+    dplyr::bind_rows(ukraine) |>
+    dplyr::select(country, origin, system, status, url, date_recorded) |>
     dplyr::distinct()
 
-  previous <- readr::read_csv("inputfiles/totals_by_system.csv") %>%
-    trim_all() %>%
-    dplyr::mutate(date_recorded = as.Date(date_recorded)) %>%
-    dplyr::select(country, origin, system, status, url, date_recorded) %>%
+  previous <- readr::read_csv("inputfiles/totals_by_system.csv") |>
+    trim_all() |>
+    dplyr::mutate(date_recorded = as.Date(date_recorded)) |>
+    dplyr::select(country, origin, system, status, url, date_recorded) |>
     dplyr::distinct()
 
-  check <- data %>%
-    dplyr::anti_join(previous, by = c("url")) %>%
+  check <- data |>
+    dplyr::anti_join(previous, by = c("url")) |>
     dplyr::mutate(date_recorded = as.Date(date_recorded))
 
   if (nrow(check) > 0) {
-    data <- check %>%
-      dplyr::bind_rows(previous, .id = NULL) %>%
+    data <- check |>
+      dplyr::bind_rows(previous, .id = NULL) |>
       dplyr::arrange(country, system, date_recorded)
 
-    data %>% readr::write_csv("inputfiles/totals_by_system.csv")
+    data |> readr::write_csv("inputfiles/totals_by_system.csv")
   } else {
     data <- previous
   }
 
-  data <- data %>%
-    create_keys() %>%
-    dplyr::group_by(matID) %>%
-    dplyr::filter(date_recorded == min(date_recorded)) %>%
+  data <- data |>
+    create_keys() |>
+    dplyr::group_by(matID) |>
+    dplyr::filter(date_recorded == min(date_recorded)) |>
     dplyr::ungroup()
-
-  return(data)
 }
 
 total_by_system_wide <- function(indsn) {
-  indsn %>%
-    dplyr::select(country, system, status) %>%
-    dplyr::group_by(country, system, status) %>%
-    dplyr::summarise(count = n()) %>%
-    tidyr::pivot_wider(names_from = status, values_from = count) %>%
-    dplyr::ungroup() %>%
+  indsn |>
+    dplyr::select(country, system, status) |>
+    dplyr::group_by(country, system, status) |>
+    dplyr::summarise(count = n()) |>
+    tidyr::pivot_wider(names_from = status, values_from = count) |>
+    dplyr::ungroup() |>
     dplyr::mutate(dplyr::across(where(is.numeric), ~ tidyr::replace_na(.x, 0)),
       total = destroyed + captured + damaged + abandoned
     )
