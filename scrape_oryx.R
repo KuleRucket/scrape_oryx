@@ -16,6 +16,9 @@ if (Sys.info()["sysname"] == "Linux") {
   print("Setting Staged Install to False")
 }
 
+# Activate renv project
+source("renv/activate.R")
+
 library(renv)
 renv::restore(prompt = FALSE)
 library(rvest)
@@ -26,6 +29,7 @@ library(stringr)
 library(readr)
 options(readr.show_col_types = FALSE)
 library(glue)
+library(dplyr)
 library(logger)
 
 source("R/functions.R")
