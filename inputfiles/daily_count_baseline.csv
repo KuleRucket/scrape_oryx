@@ -9390,8 +9390,6 @@ Ukraine,Self-Propelled Artillery,818,1,26,110,955,2026-09-10,NA,NA,NA,NA,NA,NA,N
 Ukraine,Self-Propelled Artillery,826,1,26,110,963,2026-09-17,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Ukraine,Self-Propelled Artillery,831,1,26,111,969,2026-09-24,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Ukraine,"Surface-To-Air Missile Systems
-",152,1,6,20,179,2026-09-17,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-Ukraine,"Surface-To-Air Missile Systems
 ",0,0,0,0,0,2022-02-23,0,0,0,0,0,0,0,0,0,0
 Ukraine,"Surface-To-Air Missile Systems
 ",11,0,0,0,11,2022-03-19,11,0,0,0,11,11,0,0,0,11
@@ -9633,6 +9631,8 @@ Ukraine,"Surface-To-Air Missile Systems
 ",151,1,6,20,178,2026-07-16,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Ukraine,"Surface-To-Air Missile Systems
 ",151,1,6,20,178,2026-08-27,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Ukraine,"Surface-To-Air Missile Systems
+",152,1,6,20,179,2026-09-17,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Ukraine,Tanks,0,0,0,0,0,2022-02-23,0,0,0,0,0,0,0,0,0,0
 Ukraine,Tanks,23,11,31,0,65,2022-03-19,23,11,31,0,65,23,11,31,0,65
 Ukraine,Tanks,26,9,42,0,77,2022-03-26,3,-2,11,0,12,-20,-13,-20,0,-53
