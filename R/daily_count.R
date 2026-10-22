@@ -6,13 +6,17 @@
 #'
 #' @examples
 daily_count <- function() {
-  baseline <- readr::read_csv("inputfiles/daily_count_baseline.csv")
+  count_cols <- c("destroyed", "abandoned", "captured", "damaged", "type_total")
+
+  # The baseline only stores raw counts; diffs are recomputed on every run
+  baseline <- readr::read_csv("inputfiles/daily_count_baseline.csv") %>%
+    dplyr::select(country, equipment_type, dplyr::all_of(count_cols), date_recorded)
 
   today_total <- totals_by_type() %>%
     dplyr::mutate(date_recorded = as.Date(today()))
 
   check <- today_total %>%
-    dplyr::anti_join(baseline, by = c("country", "equipment_type", "destroyed", "abandoned", "captured", "damaged", "type_total"))
+    dplyr::anti_join(baseline, by = c("country", "equipment_type", count_cols))
 
   if (length(check) > 0) {
     baseline %>%
@@ -25,8 +29,8 @@ daily_count <- function() {
       dplyr::bind_rows(check) %>%
       dplyr::group_by(country, equipment_type) %>%
       dplyr::arrange(country, equipment_type, date_recorded) %>%
-      dplyr::mutate(dplyr::across(where(is.numeric), ~ .x - dplyr::lag(.x), .names = "{.col}_diff")) %>%
-      dplyr::mutate(dplyr::across(where(is.numeric), ~ tidyr::replace_na(.x, 0))) %>%
+      dplyr::mutate(dplyr::across(dplyr::all_of(count_cols), ~ .x - dplyr::lag(.x), .names = "{.col}_diff")) %>%
+      dplyr::mutate(dplyr::across(dplyr::ends_with("_diff"), ~ tidyr::replace_na(.x, 0))) %>%
       dplyr::distinct(country, equipment_type, date_recorded, .keep_all=TRUE)
 
     rm(check)
