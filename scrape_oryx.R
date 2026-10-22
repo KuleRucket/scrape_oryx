@@ -41,7 +41,8 @@ russia_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documentin
 ukraine_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-ukrainian.html" # nolint
 
 log_info("updating daily_count.csv")
-daily_count <- daily_count() |>
-  readr::write_csv(file = "outputfiles/daily_count.csv")
+daily_count_path <- "outputfiles/daily_count.csv"
+daily_count(daily_count_path) |>
+  readr::write_csv(file = daily_count_path)
 
 log_info("done")
