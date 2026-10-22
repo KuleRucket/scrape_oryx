@@ -114,3 +114,13 @@ create_keys <- function(indsn) {
     dplyr::left_join(matID, by = c("country", "sysID", "imageID", "statusID"))
 
 }
+
+#' clean_equipment_type
+#' @description Strips the counts from an Oryx section header, handling both
+#'   the "Tanks (3264, of which ...)" and "Losses of ... - 14193, of which: ..."
+#'   formats.
+clean_equipment_type <- function(x) {
+  x |>
+    stringr::str_remove(" - \\d+, of which.*$") |>
+    stringr::str_remove_all(" \\(.*\\)")
+}

@@ -10,7 +10,8 @@ daily_count <- function() {
 
   # The baseline only stores raw counts; diffs are recomputed on every run
   baseline <- readr::read_csv("inputfiles/daily_count_baseline.csv") %>%
-    dplyr::select(country, equipment_type, dplyr::all_of(count_cols), date_recorded)
+    dplyr::select(country, equipment_type, dplyr::all_of(count_cols), date_recorded) %>%
+    dplyr::mutate(equipment_type = clean_equipment_type(equipment_type))
 
   today_total <- totals_by_type() %>%
     dplyr::mutate(date_recorded = as.Date(today()))

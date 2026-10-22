@@ -30,7 +30,7 @@ create_by_type <- function(country) {
 
   for (l in seq_along(heads)) {
     totals[l, "equipment"] <-
-      heads[l] |> stringr::str_remove_all(" \\(.*\\)")
+      heads[l] |> clean_equipment_type()
     totals[l, "destroyed"] <-
       heads[l] |>
       stringr::str_extract("destroyed: \\d+") |>
