@@ -9,5 +9,6 @@ get_data <- function(url, elements) {
 clean_equipment_type <- function(x) {
   x |>
     stringr::str_remove(" - \\d+, of which.*$") |>
-    stringr::str_remove_all(" \\(.*\\)")
+    stringr::str_remove_all(" \\(.*\\)") |>
+    stringr::str_trim()
 }
