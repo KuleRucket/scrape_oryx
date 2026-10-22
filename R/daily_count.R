@@ -18,25 +18,18 @@ daily_count <- function() {
   check <- today_total %>%
     dplyr::anti_join(baseline, by = c("country", "equipment_type", count_cols))
 
-  if (length(check) > 0) {
-    baseline %>%
-      dplyr::bind_rows(check) %>%
-      dplyr::group_by(country, equipment_type) %>%
-      dplyr::arrange(country, equipment_type, date_recorded) %>%
-      readr::write_csv("inputfiles/daily_count_baseline.csv")
+  combined <- baseline %>%
+    dplyr::bind_rows(check) %>%
+    dplyr::distinct(country, equipment_type, date_recorded, .keep_all = TRUE) %>%
+    dplyr::arrange(country, equipment_type, date_recorded)
 
-    running_count <- baseline %>%
-      dplyr::bind_rows(check) %>%
-      dplyr::group_by(country, equipment_type) %>%
-      dplyr::arrange(country, equipment_type, date_recorded) %>%
-      dplyr::mutate(dplyr::across(dplyr::all_of(count_cols), ~ .x - dplyr::lag(.x), .names = "{.col}_diff")) %>%
-      dplyr::mutate(dplyr::across(dplyr::ends_with("_diff"), ~ tidyr::replace_na(.x, 0))) %>%
-      dplyr::distinct(country, equipment_type, date_recorded, .keep_all=TRUE)
-
-    rm(check)
-
-    return(running_count)
-  } else {
-    return(baseline)
+  if (nrow(check) > 0) {
+    combined %>% readr::write_csv("inputfiles/daily_count_baseline.csv")
   }
+
+  combined %>%
+    dplyr::group_by(country, equipment_type) %>%
+    dplyr::mutate(dplyr::across(dplyr::all_of(count_cols), ~ .x - dplyr::lag(.x), .names = "{.col}_diff")) %>%
+    dplyr::mutate(dplyr::across(dplyr::ends_with("_diff"), ~ tidyr::replace_na(.x, 0))) %>%
+    dplyr::ungroup()
 }
