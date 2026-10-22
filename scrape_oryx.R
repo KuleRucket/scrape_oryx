@@ -28,12 +28,10 @@ library(tibble)
 library(stringr)
 library(readr)
 options(readr.show_col_types = FALSE)
-library(glue)
 library(dplyr)
 library(logger)
 
 source("R/functions.R")
-source("R/scrape_data.R")
 source("R/totals_by_type.R")
 source("R/daily_count.R")
 
@@ -41,20 +39,6 @@ log_info("starting")
 
 russia_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html" # nolint
 ukraine_url <- "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-ukrainian.html" # nolint
-
-today <- format(Sys.Date(), "%Y-%m-%d")
-
-log_info("updating totals_by_system.csv (this takes ages)")
-totals_by_system <- create_data() |>
-  readr::write_csv(file = "outputfiles/totals_by_system.csv")
-
-log_info("updating totals_by_system_wide.csv")
-totals_by_system_wide <- total_by_system_wide(totals_by_system) |>
-  readr::write_csv(file = "outputfiles/totals_by_system_wide.csv")
-
-log_info("updating total_by_type.csv")
-total_by_type <- totals_by_type() |>
-  readr::write_csv(file = "outputfiles/totals_by_type.csv")
 
 log_info("updating daily_count.csv")
 daily_count <- daily_count() |>
